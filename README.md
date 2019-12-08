@@ -1,1 +1,3 @@
 # JEEProjects
+
+Small JEE projects
