@@ -3,6 +3,8 @@ package org.example.demo.ticket.business.impl.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
+
 import org.example.demo.ticket.business.contract.manager.ProjetManager;
 import org.example.demo.ticket.model.bean.projet.Projet;
 import org.example.demo.ticket.model.exception.NotFoundException;
@@ -12,6 +14,7 @@ import org.example.demo.ticket.model.exception.NotFoundException;
  *
  * @author lgu
  */
+@Named
 public class ProjetManagerImpl implements ProjetManager {
 
 	/**
