@@ -1,10 +1,10 @@
 package fr.fuet.oc.jee.tp1.bean;
 
 public class Commande {
-
+	/* Propriétés du bean */
 	private Client client;
 	private String date;
-	private double montant;
+	private Double montant;
 	private String modePaiement;
 	private String statutPaiement;
 	private String modeLivraison;
@@ -26,11 +26,11 @@ public class Commande {
 		this.date = date;
 	}
 
-	public double getMontant() {
+	public Double getMontant() {
 		return montant;
 	}
 
-	public void setMontant(double montant) {
+	public void setMontant(Double montant) {
 		this.montant = montant;
 	}
 
@@ -65,5 +65,4 @@ public class Commande {
 	public void setStatutLivraison(String statutLivraison) {
 		this.statutLivraison = statutLivraison;
 	}
-
 }

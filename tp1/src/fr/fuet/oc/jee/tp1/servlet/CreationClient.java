@@ -9,62 +9,46 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.fuet.oc.jee.tp1.bean.Client;
 
-/**
- * Servlet implementation class CreationClient
- */
 public class CreationClient extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Default constructor.
-	 */
-	public CreationClient() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		boolean hasMissingParameters = false;
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
+		 * Récupération des données saisies, envoyées en tant que paramètres de la
+		 * requête GET générée à la validation du formulaire
+		 */
+		String nom = request.getParameter("nomClient");
+		String prenom = request.getParameter("prenomClient");
+		String adresse = request.getParameter("adresseClient");
+		String telephone = request.getParameter("telephoneClient");
+		String email = request.getParameter("emailClient");
+
+		String message;
+		/*
+		 * Initialisation du message à afficher : si un des champs obligatoires du
+		 * formulaire n'est pas renseigné, alors on affiche un message d'erreur, sinon
+		 * on affiche un message de succès
+		 */
+		if (nom.trim().isEmpty() || adresse.trim().isEmpty() || telephone.trim().isEmpty()) {
+			message = "Erreur - Vous n'avez pas rempli tous les champs obligatoires. <br> <a href=\"creerClient.jsp\">Cliquez ici</a> pour accéder au formulaire de création d'un client.";
+		} else {
+			message = "Client créé avec succès !";
+		}
+		/*
+		 * Création du bean Client et initialisation avec les données récupérées
+		 */
 		Client client = new Client();
-		if (request.getParameter("nomClient").isEmpty()) {
-			hasMissingParameters = true;
-		} else {
-			client.setNom(request.getParameter("nomClient"));
-		}
-		client.setPrenom(request.getParameter("prenomClient"));
-		if (request.getParameter("adresseClient").isEmpty()) {
-			hasMissingParameters = true;
-		} else {
-			client.setAdresse(request.getParameter("adresseClient"));
-		}
-		if (request.getParameter("telephoneClient").isEmpty()) {
-			hasMissingParameters = true;
-		} else {
-			client.setNumTel(request.getParameter("telephoneClient"));
-		}
-		client.setEmail(request.getParameter("emailClient"));
+		client.setNom(nom);
+		client.setPrenom(prenom);
+		client.setAdresse(adresse);
+		client.setTelephone(telephone);
+		client.setEmail(email);
 
+		/* Ajout du bean et du message à l'objet requête */
 		request.setAttribute("client", client);
-		request.setAttribute("message", hasMissingParameters ? "Echec" : "Succès");
+		request.setAttribute("message", message);
 
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		/* Transmission à la page JSP en charge de l'affichage des données */
 		this.getServletContext().getRequestDispatcher("/afficherClient.jsp").forward(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
 }
