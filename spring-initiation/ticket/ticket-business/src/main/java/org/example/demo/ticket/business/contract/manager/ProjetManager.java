@@ -8,6 +8,6 @@ import org.example.demo.ticket.model.exception.NotFoundException;
 public interface ProjetManager {
 
 	Projet getProjet(Integer pId) throws NotFoundException;
-	
+
 	List<Projet> getListProjet();
 }

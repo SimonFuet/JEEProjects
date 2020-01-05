@@ -15,7 +15,7 @@ import org.example.demo.ticket.model.exception.NotFoundException;
  * @author lgu
  */
 @Named
-public class ProjetManagerImpl implements ProjetManager {
+public class ProjetManagerImpl extends AbstractManager implements ProjetManager {
 
 	/**
 	 * Renvoie le projet demandé
