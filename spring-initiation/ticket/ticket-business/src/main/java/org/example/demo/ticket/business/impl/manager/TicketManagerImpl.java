@@ -8,10 +8,18 @@ import javax.inject.Named;
 import org.example.demo.ticket.business.contract.manager.TicketManager;
 import org.example.demo.ticket.model.bean.projet.Projet;
 import org.example.demo.ticket.model.bean.ticket.Bug;
+import org.example.demo.ticket.model.bean.ticket.Commentaire;
 import org.example.demo.ticket.model.bean.ticket.Evolution;
+import org.example.demo.ticket.model.bean.ticket.HistoriqueStatut;
 import org.example.demo.ticket.model.bean.ticket.Ticket;
+import org.example.demo.ticket.model.bean.ticket.TicketStatut;
+import org.example.demo.ticket.model.bean.utilisateur.Utilisateur;
 import org.example.demo.ticket.model.exception.NotFoundException;
+import org.example.demo.ticket.model.exception.TechnicalException;
 import org.example.demo.ticket.model.recherche.ticket.RechercheTicket;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /**
  * Manager des beans du package Ticket.
@@ -78,5 +86,37 @@ public class TicketManagerImpl extends AbstractManager implements TicketManager 
 		// Je n'ai pas encore codé la DAO
 		// Je mets juste un code temporaire pour commencer le cours...
 		return 42;
+	}
+
+	@Override
+	public HistoriqueStatut changerStatut(Ticket ticket, TicketStatut newStatut, Utilisateur utilisateur,
+			Commentaire commentaire) throws TechnicalException {
+
+		DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+		definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+		TransactionStatus transactionStatus = getPlatformTransactionManager().getTransaction(definition);
+
+		try {
+			ticket.setStatut(newStatut);
+			getDaoFactory().getTicketDao().updateTicket(ticket);
+			// ... ajout de commentaires, ...
+			TransactionStatus tsCommit = transactionStatus;
+			getPlatformTransactionManager().commit(tsCommit);
+		} finally {
+			if (transactionStatus != null) {
+				getPlatformTransactionManager().rollback(transactionStatus);
+			}
+		}
+
+//		MutableObject<TransactionStatus> vStatus = transactionHelper.beginTransaction();
+//		try {
+//		    // le traitement transactionnel ...
+//		    transactionHelper.commit(vStatus);
+//		} finally {
+//		    transactionHelper.rollback(vStatus);
+//		}
+//		
+		return null;
 	}
 }
