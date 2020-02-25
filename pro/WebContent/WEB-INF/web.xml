@@ -16,7 +16,18 @@
 	<servlet>
 		<servlet-name>Deconnexion</servlet-name>
 		<servlet-class>fr.fuet.oc.jee.pro.servlet.Deconnexion</servlet-class>
+	
+	
 	</servlet>
+		<servlet>
+		<servlet-name>Restriction</servlet-name>
+		<servlet-class>fr.fuet.oc.jee.pro.servlet.Restriction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Restriction</servlet-name>
+		<url-pattern>/restriction</url-pattern>
+	</servlet-mapping>
+	
 	
 	<servlet-mapping>
 		<servlet-name>Inscription</servlet-name>
