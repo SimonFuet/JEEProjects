@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class RestrictionFilter implements Filter {
-	public static final String ACCES_PUBLIC = "/accesPublic.jsp";
+	public static final String ACCES_CONNEXION = "/connexion";
 	public static final String ATT_SESSION_USER = "sessionUtilisateur";
 
 	@Override
@@ -27,6 +27,13 @@ public class RestrictionFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 
+		/* Non-filtrage des ressources statiques */
+		String chemin = request.getRequestURI().substring(request.getContextPath().length());
+		if (chemin.startsWith("/inc")) {
+			chain.doFilter(request, response);
+			return;
+		}
+
 		/* Récupération de la session depuis la requête */
 		HttpSession session = request.getSession();
 
@@ -36,7 +43,7 @@ public class RestrictionFilter implements Filter {
 		 */
 		if (session.getAttribute(ATT_SESSION_USER) == null) {
 			/* Redirection vers la page publique */
-			response.sendRedirect(request.getContextPath() + ACCES_PUBLIC);
+			request.getRequestDispatcher(ACCES_CONNEXION).forward(request, response);
 		} else {
 			/* Affichage de la page restreinte */
 			chain.doFilter(request, response);
