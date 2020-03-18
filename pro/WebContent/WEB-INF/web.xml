@@ -31,6 +31,14 @@
 			<file-size-threshold>1048576</file-size-threshold> <!-- 1 Mo -->
 		</multipart-config>
 	</servlet>
+	<servlet>
+		<servlet-name>Download</servlet-name>
+		<servlet-class>fr.fuet.oc.jee.pro.servlet.Download</servlet-class>
+		<init-param>
+			<param-name>chemin</param-name> 
+			<param-value>/fichiers/</param-value> 
+		</init-param>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>Inscription</servlet-name>
@@ -47,6 +55,10 @@
 	<servlet-mapping>
 		<servlet-name>Upload</servlet-name>
 		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Download</servlet-name>
+		<url-pattern>/fichiers/*</url-pattern>
 	</servlet-mapping>
 		
 	<filter>
