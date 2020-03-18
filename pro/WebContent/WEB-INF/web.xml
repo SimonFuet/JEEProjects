@@ -17,7 +17,21 @@
 		<servlet-name>Deconnexion</servlet-name>
 		<servlet-class>fr.fuet.oc.jee.pro.servlet.Deconnexion</servlet-class>
 	</servlet>
-	
+	<servlet>
+		<servlet-name>Upload</servlet-name>
+		<servlet-class>fr.fuet.oc.jee.pro.servlet.Upload</servlet-class>
+		<init-param>
+			<param-name>chemin</param-name> 
+			<param-value>/fichiers/</param-value> 
+		</init-param>
+		<multipart-config>
+			<location>c:/fichiers</location>
+			<max-file-size>10485760</max-file-size> <!-- 10 Mo -->
+			<max-request-size>52428800</max-request-size> <!-- 5 x 10 Mo -->
+			<file-size-threshold>1048576</file-size-threshold> <!-- 1 Mo -->
+		</multipart-config>
+	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>Inscription</servlet-name>
 		<url-pattern>/inscription</url-pattern>
@@ -30,17 +44,17 @@
 		<servlet-name>Deconnexion</servlet-name>
 		<url-pattern>/deconnexion</url-pattern>
 	</servlet-mapping>
-	
+	<servlet-mapping>
+		<servlet-name>Upload</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+		
 	<filter>
 	    <filter-name>Set Character Encoding</filter-name>
 	    <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
 	    <init-param>
 	        <param-name>encoding</param-name>
 	        <param-value>UTF-8</param-value>
-	    </init-param>
-	    <init-param>
-	        <param-name>ignore</param-name>
-	        <param-value>false</param-value>
 	    </init-param>
 	</filter>
 	<filter-mapping>
